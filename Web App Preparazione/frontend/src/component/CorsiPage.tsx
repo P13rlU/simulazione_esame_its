@@ -66,15 +66,15 @@ const CorsiPage: React.FC = () => {
                                 <small>ID Corso: <strong>{corso.corsoId}</strong></small><br/>
                                 Inizio: {corso.dataOraInizio} | Posti disponibili: {corso.disponibilita}
                             </div>
-                            <div style={{ marginTop: 6 }}>
+                            <div style={{ marginTop: 6, marginBottom: 20 }}>
                                 <button
                                     onClick={() => navigate(`/corsi/${corso.corsoId}/iscrizioni`)}
                                     style={{ marginRight: 8 }}
                                 >
-                                    Iscrizioni
+                                    Iscrizioni Del Corso
                                 </button>
                                 <button onClick={() => navigate(`/corsi/${corso.corsoId}/iscrizioni/nuova`)}>
-                                    Nuova iscrizione
+                                    Nuova iscrizione al corso
                                 </button>
                             </div>
                         </li>
