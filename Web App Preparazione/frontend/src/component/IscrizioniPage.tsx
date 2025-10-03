@@ -68,7 +68,7 @@ const IscrizioniPage: React.FC = () => {
             <div style={{ marginBottom: 12 }}>
                 <form  onSubmit={(e) => {
                     e.preventDefault();
-                    loadIscrizioni(); // la tua funzione di fetch
+                    loadIscrizioni();
                 }}>
                     <input
                         type="number"
