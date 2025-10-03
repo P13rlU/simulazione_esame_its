@@ -45,7 +45,11 @@ const CreateIscrizionePage: React.FC = () => {
         <div style={{ padding: 20 }}>
             <h2>Nuova iscrizione</h2>
             <p>Corso ID: <strong>{corsoIdParam}</strong></p>
-            <p><Link to={`/corsi/${corsoId}/iscrizioni`}>&larr; Torna alle iscrizioni del corso</Link></p>
+            <p>
+                <button>
+                    <Link to={`/corsi/${corsoId}/iscrizioni`}>&larr; Torna alle iscrizioni del corso</Link>
+                </button>
+            </p>
 
             {error && <p style={{ color: "red" }}>{error}</p>}
             {okMsg && <p style={{ color: "green" }}>{okMsg}</p>}
