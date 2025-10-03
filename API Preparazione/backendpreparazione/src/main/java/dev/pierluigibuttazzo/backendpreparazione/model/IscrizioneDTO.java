@@ -6,12 +6,22 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Objects;
 
 public class IscrizioneDTO {
-    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY, description = "ID dell'iscrizione, generato automaticamente dal sistema", example = "1")
     private Long iscrizioneId;
+
+    @Schema(description = "Corso a cui il partecipante si è iscritto", example = "1")
     private CorsoDTO corso;
+
+    @Schema(description = "Nome del partecipante", example = "Mario")
     private String partecipanteNome;
+
+    @Schema(description = "Cognome del partecipante", example = "Rossi")
     private String partecipanteCognome;
+
+    @Schema(description = "Email del partecipante", example = "mario.rossi@example.com")
     private String partecipanteEmail;
+
+    @Schema(description = "Data e ora dell'iscrizione", example = "2023-10-15 14:30:00")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private String dataOraIscrizione;
 
@@ -89,13 +99,6 @@ public class IscrizioneDTO {
 
     @Override
     public String toString() {
-        return "IscrizioneDTO{" +
-                "iscrizioneId=" + iscrizioneId +
-                ", corso=" + corso +
-                ", partecipanteNome='" + partecipanteNome + '\'' +
-                ", partecipanteCognome='" + partecipanteCognome + '\'' +
-                ", partecipanteEmail='" + partecipanteEmail + '\'' +
-                ", dataOraIscrizione='" + dataOraIscrizione + '\'' +
-                '}';
+        return "IscrizioneDTO{" + "iscrizioneId=" + iscrizioneId + ", corso=" + corso + ", partecipanteNome='" + partecipanteNome + '\'' + ", partecipanteCognome='" + partecipanteCognome + '\'' + ", partecipanteEmail='" + partecipanteEmail + '\'' + ", dataOraIscrizione='" + dataOraIscrizione + '\'' + '}';
     }
 }

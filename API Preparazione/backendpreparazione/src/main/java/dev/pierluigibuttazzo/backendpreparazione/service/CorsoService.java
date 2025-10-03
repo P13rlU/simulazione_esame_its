@@ -1,5 +1,6 @@
 package dev.pierluigibuttazzo.backendpreparazione.service;
 
+import dev.pierluigibuttazzo.backendpreparazione.exception.BadRequestException;
 import dev.pierluigibuttazzo.backendpreparazione.model.CorsoDTO;
 import dev.pierluigibuttazzo.backendpreparazione.repository.CorsoRepository;
 import dev.pierluigibuttazzo.backendpreparazione.service.api.ICorsoService;
@@ -20,10 +21,14 @@ public class CorsoService implements ICorsoService {
 
     @Override
     public List<CorsoDTO> findCorsi(String param) {
-        if (param == null || param.isEmpty()) {
-            return corsoMapper.corsoEntityToDtoList(corsoRepository.findAll());
-        } else {
-            return corsoMapper.corsoEntityToDtoList(corsoRepository.findByTitoloContainingIgnoreCase(param));
+        try{
+            if (param == null || param.isEmpty()) {
+                return corsoMapper.corsoEntityToDtoList(corsoRepository.findAll());
+            } else {
+                return corsoMapper.corsoEntityToDtoList(corsoRepository.findByTitoloContainingIgnoreCase(param));
+            }
+        } catch (Exception e){
+            throw new BadRequestException("Errore nella ricerca dei corsi: " + e.getMessage());
         }
     }
 }

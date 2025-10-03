@@ -1,6 +1,8 @@
 package dev.pierluigibuttazzo.backendpreparazione.model;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
 
 import java.util.Objects;
 
@@ -9,12 +11,16 @@ public class IscrizioneCreateDTO {
     private Long corsoId;
 
     @Schema(description = "Nome del partecipante", example = "Mario")
+    @NotEmpty(message = "il nome non può essere vuoto")
     private String partecipanteNome;
 
     @Schema(description = "Cognome del partecipante", example = "Rossi")
+    @NotEmpty(message = "il cognome non può essere vuoto")
     private String partecipanteCognome;
 
     @Schema(description = "Email del partecipante", example = "mario.rossi@example.com")
+    @NotEmpty(message = "l'email non può essere vuota")
+    @Email(message = "email non valida")
     private String partecipanteEmail;
 
     public IscrizioneCreateDTO() {

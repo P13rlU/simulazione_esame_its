@@ -2,13 +2,14 @@ package dev.pierluigibuttazzo.backendpreparazione.service;
 
 import dev.pierluigibuttazzo.backendpreparazione.entity.CorsoEntity;
 import dev.pierluigibuttazzo.backendpreparazione.entity.IscrizioneEntity;
+import dev.pierluigibuttazzo.backendpreparazione.exception.ConflictException;
+import dev.pierluigibuttazzo.backendpreparazione.exception.ResourceNotFoundException;
 import dev.pierluigibuttazzo.backendpreparazione.model.IscrizioneCreateDTO;
 import dev.pierluigibuttazzo.backendpreparazione.model.IscrizioneDTO;
 import dev.pierluigibuttazzo.backendpreparazione.repository.CorsoRepository;
 import dev.pierluigibuttazzo.backendpreparazione.repository.IscrizioneRepository;
 import dev.pierluigibuttazzo.backendpreparazione.service.api.IIscrizioneService;
 import dev.pierluigibuttazzo.backendpreparazione.utility.mapper.IscrizioneMapper;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,27 +49,13 @@ public class IscrizioneService implements IIscrizioneService {
     @Override
     @Transactional
     public IscrizioneDTO createIscrizione(IscrizioneCreateDTO createDTO) {
-        // 1. Validazione input
-        if (createDTO.getCorsoId() == null) {
-            throw new IllegalArgumentException("corsoId è obbligatorio");
-        }
-        if (createDTO.getPartecipanteNome() == null || createDTO.getPartecipanteNome().isBlank()) {
-            throw new IllegalArgumentException("partecipanteNome è obbligatorio");
-        }
-        if (createDTO.getPartecipanteCognome() == null || createDTO.getPartecipanteCognome().isBlank()) {
-            throw new IllegalArgumentException("partecipanteCognome è obbligatorio");
-        }
-        if (createDTO.getPartecipanteEmail() == null || createDTO.getPartecipanteEmail().isBlank()) {
-            throw new IllegalArgumentException("partecipanteEmail è obbligatorio");
-        }
-
         // 2. Carica il corso
         CorsoEntity corso = corsoRepository.findById(createDTO.getCorsoId())
-                .orElseThrow(() -> new EntityNotFoundException("Corso non trovato con ID: " + createDTO.getCorsoId()));
+                .orElseThrow(() -> new ResourceNotFoundException("Corso non trovato con ID: " + createDTO.getCorsoId()));
 
         // 3. Controlla disponibilità posti
         if (corso.getDisponibilita() <= 0) {
-            throw new IllegalStateException("Non ci sono posti disponibili per il corso: " + corso.getCorsoId());
+            throw new ConflictException("Non ci sono posti disponibili per il corso: " + corso.getCorsoId());
         }
 
         // 4. Crea l'iscrizione

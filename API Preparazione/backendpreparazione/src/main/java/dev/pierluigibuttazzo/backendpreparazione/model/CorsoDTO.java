@@ -8,12 +8,20 @@ import java.util.Objects;
 
 public class CorsoDTO {
 
-    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY, description = "ID del corso, generato automaticamente dal sistema", example = "1")
     private Long corsoId;
+
+    @Schema(description = "Titolo del corso", example = "Corso di Programmazione Java")
     private String titolo;
+
+    @Schema(description = "Data e ora di inizio del corso", example = "2023-10-20 09:00:00")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime dataOraInizio;
+
+    @Schema(description = "Luogo dove si svolge il corso", example = "Roma")
     private String luogo;
+
+    @Schema(description = "Numero di posti disponibili per il corso", example = "30")
     private Integer disponibilita;
 
     public CorsoDTO() {
