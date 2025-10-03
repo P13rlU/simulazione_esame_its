@@ -52,14 +52,17 @@ const IscrizioniPage: React.FC = () => {
                             padding: "2px 8px",
                             border: "1px solid #ccc",
                             borderRadius: 6,
+                            alignItems: "center"
                         }}
                     >
-            Corso: <strong>#{initialCorsoId}</strong>
+            Id Del Corso: <strong>#{initialCorsoId}</strong>
           </span>
                 )}
-                <Link to="/" style={{ marginLeft: "auto" }}>
-                    ← Torna alla Home
-                </Link>
+                <button style={{ marginLeft: "auto" }}>
+                    <Link to="/" style={{ marginLeft: "auto"}}>
+                        ← Torna alla Home
+                    </Link>
+                </button>
             </h2>
 
             <div style={{ marginBottom: 12 }}>
