@@ -55,7 +55,7 @@ public class IscrizioneService implements IIscrizioneService {
 
         // 3. Controlla disponibilità posti
         if (corso.getDisponibilita() <= 0) {
-            throw new ConflictException("Non ci sono posti disponibili per il corso: " + corso.getCorsoId());
+            throw new ConflictException("Non ci sono posti disponibili per il corso: " + corso.getCorsoId()); //lancia eccezione
         }
 
         // 4. Crea l'iscrizione
