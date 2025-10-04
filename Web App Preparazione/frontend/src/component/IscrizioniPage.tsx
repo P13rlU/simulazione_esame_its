@@ -111,6 +111,7 @@ const IscrizioniPage: React.FC = () => {
                                     <td>{i.partecipanteNome}</td>
                                     <td>{i.partecipanteCognome}</td>
                                     <td>{i.partecipanteEmail}</td>
+                                    {/*Data e Ora Formattata*/}
                                     <td>{formatDateTime(i.dataOraIscrizione)}</td>
                                 </tr>
                             ))}
