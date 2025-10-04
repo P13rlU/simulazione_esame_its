@@ -29,60 +29,72 @@ const CorsiPage: React.FC = () => {
 
     useEffect(() => { load(); }, []);
 
+
     return (
         <div>
-            <h2 style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                Lista Corsi
-                <button onClick={() => navigate("/iscrizioni")} style={{ marginLeft: "auto" }}>
+            <div className="header">
+                <h2 className="header-title">Lista Corsi</h2>
+                <div className="spacer" />
+                <button className="btn btn-ghost" onClick={() => navigate("/iscrizioni")}>
                     Vai a tutte le iscrizioni
                 </button>
-            </h2>
+            </div>
 
-            <div style={{ marginBottom: 12 }}>
-                <form onSubmit={(e) => {
-                    e.preventDefault();
-                    load();
-                }}>
+            <div className="section">
+                <form
+                    className="form-row"
+                    onSubmit={(e) => { e.preventDefault(); load(); }}
+                >
                     <input
+                        className="input"
                         type="text"
                         placeholder="Filtra per titolo"
                         value={titolo}
                         onChange={(e) => setTitolo(e.target.value)}
-                        style={{ marginRight: 8 }}
                     />
-                    <button type="submit">Cerca</button>
+                    <button className="btn btn-primary" type="submit">Cerca</button>
                 </form>
+
+                {loading && <p className="loading">Caricamento…</p>}
+                {error && <p className="alert alert-error">{error}</p>}
+
+                {!loading && !error && corsi.length > 0 && (
+                    <div className="grid">
+                        {corsi.map((corso) => (
+                            <div key={corso.corsoId} className="card">
+                                <div>
+                                    <div className="card-title">{corso.titolo}</div>
+                                    <div className="card-meta">
+                                        {corso.luogo} · <span className="badge">ID #{corso.corsoId}</span>
+                                    </div>
+                                    <div className="card-meta">
+                                        Inizio: {corso.dataOraInizio} · Posti disponibili: {corso.disponibilita}
+                                    </div>
+                                </div>
+
+                                <div className="card-actions">
+                                    <button
+                                        className="btn"
+                                        onClick={() => navigate(`/corsi/${corso.corsoId}/iscrizioni`)}
+                                    >
+                                        Iscrizioni del corso
+                                    </button>
+                                    <button
+                                        className="btn btn-primary"
+                                        onClick={() => navigate(`/corsi/${corso.corsoId}/iscrizioni/nuova`)}
+                                    >
+                                        Nuova iscrizione
+                                    </button>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                )}
+
+                {!loading && !error && corsi.length === 0 && (
+                    <p className="muted center">Nessun corso trovato</p>
+                )}
             </div>
-
-            {loading && <p>Caricamento...</p>}
-            {error && <p style={{ color: "red" }}>{error}</p>}
-
-            {!loading && !error && (
-                <ul>
-                    {corsi.map((corso) => (
-                        <li key={corso.corsoId} style={{ marginBottom: 10 }}>
-                            <div>
-                                <strong>{corso.titolo}</strong> — {corso.luogo} <br/>
-                                <small>ID Corso: <strong>{corso.corsoId}</strong></small><br/>
-                                Inizio: {corso.dataOraInizio} | Posti disponibili: {corso.disponibilita}
-                            </div>
-                            <div style={{ marginTop: 6, marginBottom: 20 }}>
-                                <button
-                                    onClick={() => navigate(`/corsi/${corso.corsoId}/iscrizioni`)}
-                                    style={{ marginRight: 8 }}
-                                >
-                                    Iscrizioni Del Corso
-                                </button>
-                                <button onClick={() => navigate(`/corsi/${corso.corsoId}/iscrizioni/nuova`)}>
-                                    Nuova iscrizione al corso
-                                </button>
-                            </div>
-                        </li>
-                    ))}
-                </ul>
-            )}
-
-            {!loading && !error && corsi.length === 0 && <p>Nessun corso trovato</p>}
         </div>
     );
 };

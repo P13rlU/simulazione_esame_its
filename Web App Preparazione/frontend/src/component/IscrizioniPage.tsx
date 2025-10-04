@@ -42,103 +42,86 @@ const IscrizioniPage: React.FC = () => {
     }, []);
 
     return (
-        <div style={{ padding: 20 }}>
-            <h2 style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                Iscrizioni
+        <div className="container">
+            <div className="header">
+                <h2 className="header-title">Iscrizioni</h2>
                 {initialCorsoId && (
-                    <span
-                        style={{
-                            fontSize: 14,
-                            padding: "2px 8px",
-                            border: "1px solid #ccc",
-                            borderRadius: 6,
-                            alignItems: "center"
-                        }}
-                    >
-            Id Del Corso: <strong>#{initialCorsoId}</strong>
-          </span>
+                    <span className="badge">Id Corso: <strong>#{initialCorsoId}</strong></span>
                 )}
-                <button style={{ marginLeft: "auto" }}>
-                    <Link to="/" style={{ marginLeft: "auto"}}>
-                        ← Torna alla Home
-                    </Link>
-                </button>
-            </h2>
+                <div className="spacer" />
+                <Link className="btn btn-ghost" to="/">← Torna alla Home</Link>
+            </div>
 
-            <div style={{ marginBottom: 12 }}>
-                <form  onSubmit={(e) => {
-                    e.preventDefault();
-                    loadIscrizioni();
-                }}>
+            <div className="section">
+                <form
+                    className="form-row"
+                    onSubmit={(e) => { e.preventDefault(); loadIscrizioni(); }}
+                >
                     <input
+                        className="input"
                         type="number"
                         placeholder="Corso ID"
                         value={corsoId ?? ""}
-                        onChange={(e) =>
-                            setCorsoId(e.target.value ? parseInt(e.target.value) : undefined)
-                        }
-                        style={{ marginRight: 8 }}
+                        onChange={(e) => setCorsoId(e.target.value ? parseInt(e.target.value) : undefined)}
                         disabled={!!initialCorsoId}
                     />
+
                     <input
+                        className="input"
                         type="text"
                         placeholder="Luogo"
                         value={luogo}
                         onChange={(e) => setLuogo(e.target.value)}
-                        style={{ marginRight: 8 }}
                         disabled={!!initialCorsoId}
                     />
-                    <button style={{ marginRight: 8 }} type="submit">
-                        Cerca
-                    </button>
+
+                    <button className="btn btn-primary" type="submit">Cerca</button>
+
+                    {initialCorsoId && (
+                        <button
+                            type="button"
+                            className="btn"
+                            onClick={() => navigate(`/corsi/${initialCorsoId}/iscrizioni/nuova`)}
+                        >
+                            Nuova iscrizione
+                        </button>
+                    )}
                 </form>
 
-                {initialCorsoId && (
-                    <button
-                        onClick={() =>
-                            navigate(`/corsi/${initialCorsoId}/iscrizioni/nuova`)
-                        }
-                    >
-                        Nuova iscrizione
-                    </button>
+                {loading && <p className="loading">Caricamento…</p>}
+                {error && <p className="alert alert-error">{error}</p>}
+
+                {!loading && !error && iscrizioni.length > 0 && (
+                    <div className="table-wrap">
+                        <table className="table">
+                            <thead>
+                            <tr>
+                                <th>ID Iscrizione</th>
+                                <th>Nome</th>
+                                <th>Cognome</th>
+                                <th>Email</th>
+                                <th>Data/Ora Iscrizione</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {iscrizioni.map(i => (
+                                <tr key={i.iscrizioneId}>
+                                    <td>{i.iscrizioneId}</td>
+                                    <td>{i.partecipanteNome}</td>
+                                    <td>{i.partecipanteCognome}</td>
+                                    <td>{i.partecipanteEmail}</td>
+                                    <td>{i.dataOraIscrizione}</td>
+                                </tr>
+                            ))}
+                            </tbody>
+                        </table>
+                    </div>
+                )}
+
+                {!loading && !error && iscrizioni.length === 0 && (
+                    <p className="muted center">Nessuna iscrizione trovata</p>
                 )}
             </div>
-
-            {loading && <p>Caricamento...</p>}
-            {error && <p style={{ color: "red" }}>{error}</p>}
-
-            {!loading && !error && iscrizioni.length > 0 && (
-                <table
-                    border={1}
-                    cellPadding={5}
-                    style={{ borderCollapse: "collapse", width: "100%" }}
-                >
-                    <thead>
-                    <tr>
-                        <th>ID Iscrizione</th>
-                        <th>Nome</th>
-                        <th>Cognome</th>
-                        <th>Email</th>
-                        <th>Data/Ora Iscrizione</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {iscrizioni.map((i) => (
-                        <tr key={i.iscrizioneId}>
-                            <td>{i.iscrizioneId}</td>
-                            <td>{i.partecipanteNome}</td>
-                            <td>{i.partecipanteCognome}</td>
-                            <td>{i.partecipanteEmail}</td>
-                            <td>{i.dataOraIscrizione}</td>
-                        </tr>
-                    ))}
-                    </tbody>
-                </table>
-            )}
-
-            {!loading && !error && iscrizioni.length === 0 && (
-                <p>Nessuna iscrizione trovata</p>
-            )}
         </div>
     );
 };

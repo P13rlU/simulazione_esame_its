@@ -42,38 +42,35 @@ const CreateIscrizionePage: React.FC = () => {
     };
 
     return (
-        <div style={{ padding: 20 }}>
-            <h2>Nuova iscrizione</h2>
-            <p>Corso ID: <strong>{corsoIdParam}</strong></p>
-            <p>
-                <button>
-                    <Link to={`/corsi/${corsoId}/iscrizioni`}>&larr; Torna alle iscrizioni del corso</Link>
-                </button>
-            </p>
+        <div className="container">
+            <div className="header">
+                <h2 className="header-title">Nuova iscrizione</h2>
+                <span className="badge">Corso ID: <strong>{corsoIdParam}</strong></span>
+                <div className="spacer" />
+                <Link className="btn btn-ghost" to={`/corsi/${corsoId}/iscrizioni`}>
+                    ← Torna alle iscrizioni del corso
+                </Link>
+            </div>
 
-            {error && <p style={{ color: "red" }}>{error}</p>}
-            {okMsg && <p style={{ color: "green" }}>{okMsg}</p>}
+            {error && <p className="alert alert-error">{error}</p>}
+            {okMsg && <p className="alert alert-info">{okMsg}</p>}
 
-            <form onSubmit={handleSubmit} style={{ maxWidth: 420 }}>
-                <div style={{ marginBottom: 8 }}>
-                    <label>Nome<br/>
-                        <input value={nome} onChange={(e) => setNome(e.target.value)} required />
-                    </label>
-                </div>
-                <div style={{ marginBottom: 8 }}>
-                    <label>Cognome<br/>
-                        <input value={cognome} onChange={(e) => setCognome(e.target.value)} required />
-                    </label>
-                </div>
-                <div style={{ marginBottom: 8 }}>
-                    <label>Email<br/>
-                        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-                    </label>
-                </div>
-                <button type="submit" disabled={submitting}>
-                    {submitting ? "Salvataggio..." : "Crea iscrizione"}
-                </button>
-            </form>
+            <div className="section" style={{ maxWidth: 520, marginInline: "auto" }}>
+                <form onSubmit={handleSubmit}>
+                    <div className="form-row">
+                        <input className="input" placeholder="Nome" value={nome} onChange={(e) => setNome(e.target.value)} required />
+                        <input className="input" placeholder="Cognome" value={cognome} onChange={(e) => setCognome(e.target.value)} required />
+                    </div>
+                    <div className="form-row">
+                        <input className="input" type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                    </div>
+                    <div className="form-row">
+                        <button className="btn btn-primary" type="submit" disabled={submitting}>
+                            {submitting ? "Salvataggio..." : "Crea iscrizione"}
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     );
 };
