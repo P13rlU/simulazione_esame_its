@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import type { Iscrizioni } from "../types/types";
 import { fetchIscrizioni } from "../services/iscrizioniService";
 import { useNavigate, useParams, Link } from "react-router-dom";
+import {formatDateTime} from "../utils/formatDate.ts"
 
 const IscrizioniPage: React.FC = () => {
     const { corsoId: corsoIdParam } = useParams();
@@ -110,7 +111,7 @@ const IscrizioniPage: React.FC = () => {
                                     <td>{i.partecipanteNome}</td>
                                     <td>{i.partecipanteCognome}</td>
                                     <td>{i.partecipanteEmail}</td>
-                                    <td>{i.dataOraIscrizione}</td>
+                                    <td>{formatDateTime(i.dataOraIscrizione)}</td>
                                 </tr>
                             ))}
                             </tbody>
