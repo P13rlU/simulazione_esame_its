@@ -7,6 +7,7 @@ export default function HomePage() {
                 <h1 className="header-title">Home</h1>
             </div>
             <div className="section">
+                {/*porta al componente CorsiPage*/}
                 <CorsiPage/>
             </div>
         </div>
